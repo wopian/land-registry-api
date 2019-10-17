@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <h1><strong><em>Welcome You Are Sucessfully Loged in</em></strong></h1>
+            <h1><strong><em>Welcome You Are Sucessfully Logged in</em></strong></h1>
         </div>
     </form>
 </body>
