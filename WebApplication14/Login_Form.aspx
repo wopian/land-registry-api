@@ -8,24 +8,20 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <asp:Label ID="Label1" runat="server" Text="Username"></asp:Label>
-&nbsp;&nbsp;&nbsp;
-            <asp:TextBox ID="txt_Username" runat="server"></asp:TextBox>
+        <div">
+        <asp:Label ID="Label1" runat="server" Text="Username" BorderStyle="None"></asp:Label>
+
+            <asp:TextBox ID="txt_Username" runat="server" ForeColor="Black"></asp:TextBox>
             <br />
             <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <br />
-            <asp:Label ID="Label2" runat="server" Text="Password"></asp:Label>
-&nbsp;&nbsp;&nbsp;
-            <asp:TextBox ID="txt_Password" runat="server"></asp:TextBox>
+            <asp:Label ID="Label2" runat="server" Text="Password" BorderStyle="None"></asp:Label>
+
+            <asp:TextBox ID="txt_Password" runat="server" TextMode="Password" ForeColor="Black"></asp:TextBox>
             <br />
             <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Label ID="Label3" runat="server" ForeColor="Red" Text="Incorrect Username or Password" Visible="False"></asp:Label>
             <br />
+            <asp:Button ID="btn_Login" runat="server" OnClick="Button1_Click" Text="Login" Width="111px" />
             <br />
-            <asp:Button ID="btn_Login" runat="server" OnClick="Button1_Click" Text="Login" />
             <br />
             <br />
         </div>
