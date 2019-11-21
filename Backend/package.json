@@ -1,0 +1,18 @@
+{
+  "name": "Backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wopian/co659-esd",
+  "author": "James Harris <wopian@wopian.me>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "cli-ux": "^5.3.3",
+    "execa": "^3.3.0",
+    "node-postcodes.io": "^1.0.0",
+    "ospoint": "^0.2.1"
+  },
+  "scripts": {
+    "batch": "node bin/ogr2ogr"
+  }
+}
