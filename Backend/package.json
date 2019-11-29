@@ -1,5 +1,5 @@
 {
-  "name": "Backend",
+  "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/wopian/co659-esd",
@@ -7,10 +7,14 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "adm-zip": "^0.4.13",
+    "aws-sdk": "^2.586.0",
     "cli-ux": "^5.3.3",
     "execa": "^3.3.0",
+    "fs-extra": "^8.1.0",
     "node-postcodes.io": "^1.0.0",
-    "ospoint": "^0.2.1"
+    "ospoint": "^0.2.1",
+    "sqlite3": "^4.1.1"
   },
   "scripts": {
     "batch": "node bin/ogr2ogr"
