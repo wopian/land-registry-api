@@ -17,6 +17,6 @@
     "sqlite3": "^4.1.1"
   },
   "scripts": {
-    "batch": "node bin/ogr2ogr"
+    "batch": "node bin/unzip && node bin/ogr2ogr"
   }
 }

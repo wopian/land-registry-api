@@ -1,0 +1,7 @@
+#!bash
+
+docker run -d \
+--name localAWS \
+-p 4567-4578:4567-4578 \
+-p 8080:8080 \
+localstack/localstack
