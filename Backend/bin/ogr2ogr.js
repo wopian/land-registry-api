@@ -1,4 +1,4 @@
-const { readdir, readFileSync, statSync } = require('fs')
+const { readdir, readFile, writeFile, statSync } = require('fs')
 const { emptyDirSync } = require('fs-extra')
 const { join, basename, extname } = require('path')
 const execa = require('execa')
@@ -24,34 +24,49 @@ readdir(landRegistry, async (err, files) => {
 
     const fileCount = filteredFiles.length
     action.start(`0/${fileCount} Converting GML to GeoJSON`)
-    
+
     for (const [i, file] of filteredFiles.entries()) {
         action.start(`${i + 1}/${fileCount} Converting ${file}`)
 
         // Append file size to log status of current process to get a rough idea of how long it will take
         const fileSize = statToMegaByte(statSync(`${landRegistry}/${file}`))
         action.start(`${i + 1}/${fileCount} Converting ${file} (${fileSize} MiB)`)
-        
+
         // Strip extension from filename
         const name = basename(file, extname(file))
         const filePath = `${geoJSON}/${name}.geojson`
 
         try {
-            await execa('ogr2ogr', ['-f', 'GeoJSON', filePath, `${landRegistry}/${file}`])
+            await execa('ogr2ogr', [
+                '-overwrite',
+                '-f',
+                'GeoJSON',
+                filePath,
+                `${landRegistry}/${file}`
+            ])
         } catch (error) {
             console.error(error)
         }
 
-        console.log('hello')
-
-        readFileSync(filePath, (error, data) => {
+        readFile(filePath, (error, data) => {
             if (error) console.error(error)
             const json = JSON.parse(data)
-            console.log(json)
-            throw 'done'
-        })
+            delete json.type
+            delete json.name
+            delete json.crs
+            json.features.forEach(feature => {
+                delete feature.type
+                feature.INSPIREID = feature.properties.INSPIREID
+                delete feature.properties
+                feature.coordinates = feature.geometry.coordinates
+                delete feature.geometry
+            })
+            writeFile(filePath, JSON.stringify(json), err => {
+                if (err) console.error(err)
 
-        const fileSizeGeo = statToMegaByte(statSync(filePath))
-        console.log(`✓ ${file} (${fileSize} MiB to ${fileSizeGeo} MiB)`)
+                const fileSizeGeo = statToMegaByte(statSync(filePath))
+                console.log(`✓ ${file} (${fileSize} MiB to ${fileSizeGeo} MiB)`)
+            })
+        })
     }
 })
