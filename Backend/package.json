@@ -8,13 +8,15 @@
   "private": true,
   "dependencies": {
     "adm-zip": "^0.4.13",
-    "aws-sdk": "^2.586.0",
+    "better-sqlite3": "^5.4.3",
     "cli-ux": "^5.3.3",
     "execa": "^3.3.0",
     "fs-extra": "^8.1.0",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-router": "^8.0.6",
     "node-postcodes.io": "^1.0.0",
-    "ospoint": "^0.2.1",
-    "sqlite3": "^4.1.1"
+    "ospoint": "^0.2.1"
   },
   "scripts": {
     "batch": "node bin/unzip && node bin/ogr2ogr"

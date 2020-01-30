@@ -3,3 +3,6 @@ geoJSON/*
 land-registry/*
 land-registry-zips/*
 backup
+database/*
+digitalocean
+digitalocean.pub
