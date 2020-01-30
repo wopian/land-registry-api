@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wopian/co659-esd",
+  "author": "James Harris <wopian@wopian.me>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "adm-zip": "^0.4.13",
+    "better-sqlite3": "^5.4.3",
+    "cli-ux": "^5.3.3",
+    "execa": "^3.3.0",
+    "fs-extra": "^8.1.0",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-router": "^8.0.6",
+    "node-postcodes.io": "^1.0.0",
+    "ospoint": "^0.2.1"
+  },
+  "scripts": {
+    "batch": "node bin/unzip && node bin/ogr2ogr && node bin/updateDB",
+    "start": "node src"
+  }
+}
