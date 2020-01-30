@@ -19,6 +19,7 @@
     "ospoint": "^0.2.1"
   },
   "scripts": {
-    "batch": "node bin/unzip && node bin/ogr2ogr"
+    "batch": "node bin/unzip && node bin/ogr2ogr && node bin/updateDB",
+    "start": "node src"
   }
 }
