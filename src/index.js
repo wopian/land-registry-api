@@ -44,7 +44,7 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
         longitude: parseFloat(ctx.params.longitude),
         latitude: parseFloat(ctx.params.latitude),
         // Maybe default to 2 instead of 0.0015
-        radius: 20,
+        radius: 0.00000015,
         limit 
     })
     if (data) {
