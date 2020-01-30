@@ -68,7 +68,7 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
 })
 
 server.use(router.routes())
-server.listen(8080)
+server.listen(80)
 
 /*
 db.serialize(() => {
