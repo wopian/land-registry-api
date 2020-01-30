@@ -38,13 +38,17 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
     // miles = 3959; km = 6371
     //const sql = db.prepare('SELECT inspireID, ( 3959 & acos(cos(radians(@latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians(@longitude)) + sin(radians(@latitude)) * sin(radians(latitude)))) AS distance FROM landRegistry HAVING distance < 1 ORDER BY distance LIMIT 0, 20')
     //const sql = db.prepare('SELECT * from landRegistry WHERE latitude != 0 AND latitude BETWEEN (@latitude - @radius) AND (@latitude + @radius) AND longitude BETWEEN (@longitude - @radius) AND (@longitude + @radius) ORDER BY abs(@latitude - latitude) + abs(@longitude - longitude) ASC limit 20')
-    const sql = db.prepare('SELECT inspireID, coordinates from landRegistry ORDER BY (latitude - @latitude) * (latitude - @latitude) + ((longitude - @longitude) * @radius) * ((longitude - @longitude) * @radius) ASC limit @limit')
-    const limit = (ctx.params.limit && ctx.params.limit <= 500) ? ctx.params.limit : 100
+    //const sql = db.prepare('SELECT inspireID, coordinates from landRegistry ORDER BY (latitude - @latitude) * (latitude - @latitude) + ((longitude - @longitude) * @radius) * ((longitude - @longitude) * @radius) ASC limit @limit')
+    
+    const sql = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE (latitude-@latitude)*(latitude-@latitude) + (longitude-@longitude)*(longitude-@longitude) < @radius*@radius')
+    
+    const limit = (ctx.params.limit > 0 && ctx.params.limit <= 500) ? ctx.params.limit : 100
     const data = sql.all({
         longitude: parseFloat(ctx.params.longitude),
         latitude: parseFloat(ctx.params.latitude),
         // Maybe default to 2 instead of 0.0015
-        radius: 0.00000015,
+        //radius: 0.00015,
+        radius: 0.0005,
         limit 
     })
     if (data) {
@@ -64,7 +68,7 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
 })
 
 server.use(router.routes())
-server.listen(80)
+server.listen(8080)
 
 /*
 db.serialize(() => {
