@@ -50,6 +50,7 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
     if (data) {
         data.forEach(item => {
             item.coordinates = JSON.parse(item.coordinates)
+            item.inspireID 
         })
         ctx.body = {
             data,

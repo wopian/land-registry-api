@@ -32,7 +32,7 @@ readdir(geoJSON, async (err, files) => {
             // console.log(coordinates[0][0])
             
             insert.run({
-                inspireID: INSPIREID,
+                inspireID: INSPIREID.toString(),
                 coordinates: JSON.stringify(coordinates[0]),
                 latitude,
                 longitude
