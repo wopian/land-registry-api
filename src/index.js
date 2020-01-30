@@ -11,7 +11,7 @@ router.get('/', ctx => {
         api: {
             1: "/inspireid/:id",
             2: "/nearby/:latitude/:longitude",
-            3: "/nearby/:latitude/:longitude/:radius"
+            3: "/nearby/:latitude/:longitude/:limit"
         }
     }
 })
@@ -63,7 +63,7 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
 })
 
 server.use(router.routes())
-server.listen(8080)
+server.listen(80)
 
 /*
 db.serialize(() => {
