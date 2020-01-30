@@ -7,7 +7,13 @@ const server = new Koa()
 const router = new Router()
 
 router.get('/', ctx => {
-    ctx.body = "I am an API"
+    ctx.body = {
+        api: {
+            1: "/inspireid/:id",
+            2: "/nearby/:latitude/:longitude",
+            3: "/nearby/:latitude/:longitude/:radius"
+        }
+    }
 })
 
 

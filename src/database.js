@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3')
 
 const db = new Database('database/property.db', { 
-    verbose: console.log,
+    // verbose: console.log,
     fileMustExist: false
 })
 
