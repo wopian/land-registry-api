@@ -70,21 +70,3 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
 
 server.use(router.routes())
 server.listen(80)
-
-/*
-db.serialize(() => {
-    db.run("CREATE TABLE lorem (info TEXT)")
-
-    const statement = db.prepare("INSERT INTO lorem VALUES (?)")
-    for (let i = 0; i < 10; i++) {
-        statement.run(`Ipsum ${i}`)
-    }
-    statement.finalize()
-
-    db.each("SELECT rowid as id, info FROM lorem", (err, row) => {
-        console.log(`${row.id}: ${row.info}`)
-    })
-})
-
-db.close()
-*/
