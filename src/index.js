@@ -43,9 +43,8 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
         '100m': 0.00053995244,
         '200m': 0.00107995244,
         '500m': 0.00269975244,
-        '1000m': 0.00539955244,
-        'default': 0.00053995244 // 100m
-    }[ctx.query.radius || radius['default']]
+        '1000m': 0.00539955244
+    }[ctx.query.radius || 0.00053995244] // 100m default
     
     const data = sql.all({
         longitude: parseFloat(ctx.params.longitude),
@@ -70,4 +69,4 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
 })
 
 server.use(router.routes())
-server.listen(80)
+server.listen(8090)
