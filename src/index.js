@@ -10,8 +10,7 @@ router.get('/', ctx => {
     ctx.body = {
         api: {
             1: "/inspireid/:id",
-            2: "/nearby/:latitude/:longitude",
-            3: "/nearby/:latitude/:longitude/:limit"
+            2: "/nearby/:latitude/:longitude"
         }
     }
 })
@@ -32,24 +31,23 @@ router.get('/inspireid/:id', bodyParser, async ctx => {
     }
 })
 
-// http://localhost:3001/nearby/51.6245033595047/-3.93390545244112
-// http://localhost:3001/nearby/51.6245033595047/-3.93390545244112/2
-router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
-    // miles = 3959; km = 6371
-    //const sql = db.prepare('SELECT inspireID, ( 3959 & acos(cos(radians(@latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians(@longitude)) + sin(radians(@latitude)) * sin(radians(latitude)))) AS distance FROM landRegistry HAVING distance < 1 ORDER BY distance LIMIT 0, 20')
-    //const sql = db.prepare('SELECT * from landRegistry WHERE latitude != 0 AND latitude BETWEEN (@latitude - @radius) AND (@latitude + @radius) AND longitude BETWEEN (@longitude - @radius) AND (@longitude + @radius) ORDER BY abs(@latitude - latitude) + abs(@longitude - longitude) ASC limit 20')
-    //const sql = db.prepare('SELECT inspireID, coordinates from landRegistry ORDER BY (latitude - @latitude) * (latitude - @latitude) + ((longitude - @longitude) * @radius) * ((longitude - @longitude) * @radius) ASC limit @limit')
-    
+// http://localhost:3001/nearby/51.6245033595047/-3.93390545244112?limit=500&radius=1000m
+router.get('/nearby/:latitude/:longitude', async ctx => {
     const sql = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE (latitude-@latitude)*(latitude-@latitude) + (longitude-@longitude)*(longitude-@longitude) < @radius*@radius')
     
-    const limit = (ctx.params.limit > 0 && ctx.params.limit <= 500) ? ctx.params.limit : 500
+    const limit = (ctx.query.limit > 0 && ctx.query.limit <= 500) ? ctx.query.limit : 500
+    const radius = {
+        "100m" = 0.00053995244
+        "200m" = 0.00107995244
+        "500m" = 0.00269975244
+        "1000m" = 0.00539955244
+        "default" = 0.00269975244 // 500m
+    }[ctx.query.radius || radius['default']]
+    
     const data = sql.all({
         longitude: parseFloat(ctx.params.longitude),
         latitude: parseFloat(ctx.params.latitude),
-        // Original 0.005 (approx 92m)
-        // 0.00053995244 = ~100m
-        // 0.00107995244 = ~200m
-        radius: 0.00107995244,
+        radius,
         limit 
     })
     if (data) {
