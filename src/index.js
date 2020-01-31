@@ -69,4 +69,4 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
 })
 
 server.use(router.routes())
-server.listen(8090)
+server.listen(80)
