@@ -9,8 +9,8 @@ const router = new Router()
 router.get('/', ctx => {
     ctx.body = {
         api: {
-            1: "/inspireid/:id",
-            2: "/nearby/:latitude/:longitude"
+            1: '/inspireid/:id',
+            2: '/nearby/:latitude/:longitude'
         }
     }
 })
@@ -25,7 +25,7 @@ router.get('/inspireid/:id', bodyParser, async ctx => {
         ctx.body = { data }
     } else {
         ctx.body = {
-            error: "INSPIREID does not exist"
+            error: 'INSPIREID does not exist'
         }
         ctx.status = 404
     }
@@ -37,11 +37,11 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     
     const limit = (ctx.query.limit > 0 && ctx.query.limit <= 500) ? ctx.query.limit : 500
     const radius = {
-        "100m" = 0.00053995244
-        "200m" = 0.00107995244
-        "500m" = 0.00269975244
-        "1000m" = 0.00539955244
-        "default" = 0.00269975244 // 500m
+        '100m': 0.00053995244
+        '200m': 0.00107995244
+        '500m': 0.00269975244
+        '1000m': 0.00539955244
+        'default': 0.00269975244 // 500m
     }[ctx.query.radius || radius['default']]
     
     const data = sql.all({
