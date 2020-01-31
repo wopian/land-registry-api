@@ -20,6 +20,6 @@
   },
   "scripts": {
     "batch": "node bin/unzip && node bin/ogr2ogr && node bin/updateDB",
-    "start": "node src"
+    "start": "node src --port 8080"
   }
 }

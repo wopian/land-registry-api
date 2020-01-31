@@ -37,7 +37,7 @@ router.get('/inspireid/:id', bodyParser, async ctx => {
 // http://localhost:3001/nearby/51.6245033595047/-3.93390545244112?limit=500&radius=1000m
 router.get('/nearby/:latitude/:longitude', async ctx => {
     const sql = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE (latitude-@latitude)*(latitude-@latitude) + (longitude-@longitude)*(longitude-@longitude) < @radius*@radius LIMIT @limit')
-    
+
     const limit = (ctx.query.limit > 0 && ctx.query.limit <= 500) ? ctx.query.limit : 200
     const radius = {
         '100m': 0.00053995244,
@@ -45,17 +45,17 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
         '500m': 0.00269975244,
         '1000m': 0.00539955244
     }[ctx.query.radius || '100m']
-    
+
     const data = sql.all({
         longitude: parseFloat(ctx.params.longitude),
         latitude: parseFloat(ctx.params.latitude),
         radius,
-        limit 
+        limit
     })
     if (data) {
         data.forEach(item => {
             item.coordinates = JSON.parse(item.coordinates)
-            item.inspireID 
+            item.inspireID
         })
         ctx.body = {
             data,
@@ -68,5 +68,8 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     }
 })
 
+const args = process.argv.slice(2)
+const port = args[0] === '--port' ? args[1] : 80
+
 server.use(router.routes())
-server.listen(80)
+server.listen(port)
