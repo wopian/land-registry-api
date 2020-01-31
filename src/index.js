@@ -25,7 +25,7 @@ router.get('/inspireid/:id', bodyParser, async ctx => {
         ctx.body = { data }
     } else {
         ctx.body = {
-            error: 'INSPIREID does not exist'
+            error: `${ctx.params.id} is not a valid INSPIREID'
         }
         ctx.status = 404
     }
