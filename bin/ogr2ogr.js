@@ -1,8 +1,8 @@
 const { readdir, readFile, writeFile, statSync } = require('fs')
 const { emptyDirSync } = require('fs-extra')
 const { join, basename, extname } = require('path')
-const execa = require('execa')
 const { cli } = require('cli-ux')
+const execa = require('execa')
 
 const action = cli.action
 const landRegistry = join(__dirname, '../land-registry')

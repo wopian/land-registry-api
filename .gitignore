@@ -1,8 +1,10 @@
 node_modules
 backup
-geoJSON
-land-registry
-land-registry-zips
-database
+geoJSON/*
+land-registry/*
+land-registry-zips/*
+!land-registry-zips/.gitkeep
+database/*
+!database/.gitkeep
 digitalocean
 digitalocean.pub

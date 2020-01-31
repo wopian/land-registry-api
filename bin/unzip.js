@@ -1,4 +1,4 @@
-const { readdir, writeFile } = require('fs')
+const { readdir, writeFileSync } = require('fs')
 const { emptyDirSync } = require('fs-extra')
 const { join, basename, extname } = require('path')
 const { cli } = require('cli-ux')
@@ -38,13 +38,15 @@ readdir(landRegistryZips, async (err, files) => {
                     const fileName = `${name}.gml`
                     const filePath = join(landRegistry, fileName)
 
-                    writeFile(filePath, fileData, err => {
-                        if (err) console.error(err)
-                    })
+                    try {
+                        writeFileSync(filePath, fileData)
+                    } catch (err) {
+                        console.error(err)
+                    }
                 }
             })
         } catch (err) {
-            console.log(`${name}: ${err}`)
+            console.error(`${name}: ${err}`)
         }
     }
 })
