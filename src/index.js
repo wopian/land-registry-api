@@ -42,13 +42,14 @@ router.get('/nearby/:latitude/:longitude/:limit?', async ctx => {
     
     const sql = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE (latitude-@latitude)*(latitude-@latitude) + (longitude-@longitude)*(longitude-@longitude) < @radius*@radius')
     
-    const limit = (ctx.params.limit > 0 && ctx.params.limit <= 500) ? ctx.params.limit : 100
+    const limit = (ctx.params.limit > 0 && ctx.params.limit <= 500) ? ctx.params.limit : 500
     const data = sql.all({
         longitude: parseFloat(ctx.params.longitude),
         latitude: parseFloat(ctx.params.latitude),
-        // Maybe default to 2 instead of 0.0015
-        //radius: 0.00015,
-        radius: 0.0005,
+        // Original 0.005 (approx 92m)
+        // 0.00053995244 = ~100m
+        // 0.00107995244 = ~200m
+        radius: 0.00107995244,
         limit 
     })
     if (data) {
