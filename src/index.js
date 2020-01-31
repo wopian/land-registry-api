@@ -37,10 +37,10 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     
     const limit = (ctx.query.limit > 0 && ctx.query.limit <= 500) ? ctx.query.limit : 500
     const radius = {
-        '100m': 0.00053995244
-        '200m': 0.00107995244
-        '500m': 0.00269975244
-        '1000m': 0.00539955244
+        '100m': 0.00053995244,
+        '200m': 0.00107995244,
+        '500m': 0.00269975244,
+        '1000m': 0.00539955244,
         'default': 0.00269975244 // 500m
     }[ctx.query.radius || radius['default']]
     
