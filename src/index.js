@@ -50,7 +50,8 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     //const sql = db.prepare('EXPLAIN QUERY PLAN SELECT inspireID, coordinates FROM landRegistry WHERE (latitude-@latitude)*(latitude-@latitude) + (longitude-@longitude)*(longitude-@longitude) < @radius LIMIT @limit')
     const sql = db.prepare('SELECT inspireID, coordinates, getNearest(latitude, @latitude, longitude, @longitude) AS distance FROM landRegistry WHERE distance < @radius ORDER BY distance LIMIT 0,@limit')
 
-    const limit = (ctx.query.limit > 0 && ctx.query.limit <= 500) ? ctx.query.limit : 200
+    // Sanitise optional parameters and set defaults
+    const limit = (ctx.query.limit > 0 && ctx.query.limit <= 5000) ? ctx.query.limit : 100
     const radius = (ctx.query.radius > 0 && ctx.query.radius <= 1000) ? ctx.query.radius / 1000 : 0.1
 
     const data = sql.all({
