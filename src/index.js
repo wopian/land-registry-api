@@ -7,15 +7,13 @@ function radians(degrees) {
     return degrees * (Math.PI / 180)
 }
 
-db.function('getNearest', { deterministic: true, varargs: true }, (latDB, lat, longDB, long) => {
-    return 6371 * Math.acos(
-        Math.cos(radians(lat)) *
-        Math.cos(radians(latDB)) *
-        Math.cos(radians(longDB) - radians(long)) +
-        Math.sin(radians(lat)) *
-        Math.sin(radians(latDB))
-    )
-})
+db.function('getNearest', { deterministic: true }, (latDB, lat, longDB, long) => 6371 * Math.acos(
+    Math.cos(radians(lat)) *
+    Math.cos(radians(latDB)) *
+    Math.cos(radians(longDB) - radians(long)) +
+    Math.sin(radians(lat)) *
+    Math.sin(radians(latDB))
+))
 
 const server = new Koa()
 const router = new Router()
