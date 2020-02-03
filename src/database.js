@@ -8,7 +8,7 @@ const db = new Database('database/property.db', {
 db.pragma('journal_mode = WAL')
 
 const tableName = "landRegistry"
-const tableColumns = "inspireID TEXT PRIMARY KEY, coordinates TEXT NOT NULL, latitude TEXT NOT NULL, longitude TEXT NOT NULL"
+const tableColumns = "inspireID TEXT PRIMARY KEY, coordinates TEXT NOT NULL, latitude DOUBLE NOT NULL, longitude DOUBLE NOT NULL"
 const createTable = db.prepare(`CREATE TABLE IF NOT EXISTS ${tableName} (${tableColumns})`)
 createTable.run()
 
