@@ -8,13 +8,12 @@ export function degrees(radians) {
 
 export function derivedPosition(latitude, longitude, range, bearing) {
   const EarthRadius = 6371000 // meters
-
   const latA = radians(latitude)
   const longA = radians(longitude)
   const angularDistance = range / EarthRadius
   const trueCourse = radians(bearing)
 
-  let lat = Math.asin(
+  const lat = Math.asin(
       Math.sin(latA) *
       Math.cos(angularDistance) +
       Math.cos(latA) *
@@ -27,12 +26,9 @@ export function derivedPosition(latitude, longitude, range, bearing) {
       Math.cos(angularDistance) - Math.sin(latA) * Math.sin(lat)
   )
 
-  let long = ((longA + dlong + Math.PI) % (Math.PI * 2)) - Math.PI
+  const long = ((longA + dlong + Math.PI) % (Math.PI * 2)) - Math.PI
 
-  lat = degrees(lat)
-  long = degrees(long)
-
-  return { lat, long }
+  return { lat: degrees(lat), long: degrees(long) }
 }
 
 export function getNearest (latDB, lat, longDB, long) {
