@@ -13,17 +13,16 @@ readdir(geoJSON, async (err, files) => {
     if (err) console.error(err)
 
     const fileCount = files.length
-    action.start(`0/${fileCount} Inserting GeoJSON files into database`)
 
     for (const [i, file] of files.entries()) {
         const raw = readFileSync(join(geoJSON, file))
         const { features } = JSON.parse(raw)
 
         const featuresCount = features.length
-        action.start(`${i + 1}/${fileCount} ${basename(file)} | 0/${featuresCount} Inserting features into database`)
+        action.start(`${i + 1}/${fileCount} ${basename(file)} | Inserting GeoJSON features`)
 
         features.forEach(({ INSPIREID, coordinates }, index ) => {
-            action.start(`${i + 1}/${fileCount} ${basename(file)} | ${index + 1}/${featuresCount} Inserting features into database`)
+            //action.start(`${i + 1}/${fileCount} ${basename(file)} | ${index + 1}/${featuresCount} Preparing data for insert`)
 
             // Data structured EASTING,NORTHING
             // Method wants NORTHING,EASTING
