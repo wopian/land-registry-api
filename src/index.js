@@ -2,12 +2,12 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const bodyParser = require('koa-body')()
 const db = require('./database')
-const { degrees, radians, getNearest } = require('./util')
+const { nearestPositions, derivedPosition } = require('./util')
 
-db.function('getNearest', { deterministic: true }, getNearest (latDB, lat, longDB, long))
+db.function('nearestPositions', { deterministic: true }, nearestPositions)
 
 const selectInspireID = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE inspireID=?')
-const selectNearby = db.prepare('SELECT inspireID, coordinates, getNearest(latitude, @latitude, longitude, @longitude) AS distance FROM landRegistry WHERE latitude > @latitudeMin AND latitude < @latitudeMax AND longitude < @longitudeMax AND longitude > @longitudeMin AND distance < @radius ORDER BY distance LIMIT 0,@limit')
+const selectNearby = db.prepare('SELECT inspireID, coordinates, nearestPositions(latitude, @latitude, longitude, @longitude) AS distance FROM landRegistry WHERE latitude > @latitudeMin AND latitude < @latitudeMax AND longitude < @longitudeMax AND longitude > @longitudeMin AND distance < @radius ORDER BY distance LIMIT 0,@limit')
 
 
 const server = new Koa()

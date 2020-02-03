@@ -1,12 +1,12 @@
-export function radians(degrees) {
+function radians(degrees) {
   return degrees * (Math.PI / 180)
 }
 
-export function degrees(radians) {
+function degrees(radians) {
   return radians * (180 / Math.PI)
 }
 
-export function derivedPosition(latitude, longitude, range, bearing) {
+function derivedPosition(latitude, longitude, range, bearing) {
   const EarthRadius = 6371000 // meters
   const latA = radians(latitude)
   const longA = radians(longitude)
@@ -31,7 +31,7 @@ export function derivedPosition(latitude, longitude, range, bearing) {
   return { lat: degrees(lat), long: degrees(long) }
 }
 
-export function getNearest (latDB, lat, longDB, long) {
+function nearestPositions (latDB, lat, longDB, long) {
   const radian_lat = radians(lat)
   const radian_long = radians(long)
   const radian_latDB = radians(latDB)
@@ -45,3 +45,8 @@ export function getNearest (latDB, lat, longDB, long) {
       Math.sin(radian_latDB)
   )
 }
+
+exports.radians = radians
+exports.degrees = degrees
+exports.derivedPosition = derivedPosition
+exports.nearestPositions = nearestPositions
