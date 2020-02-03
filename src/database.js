@@ -1,6 +1,6 @@
 const Database = require('better-sqlite3')
 
-const db = new Database('database/property.db', { 
+const db = new Database('database/property.db', {
     // verbose: console.log,
     fileMustExist: false
 })
@@ -12,7 +12,10 @@ const tableColumns = "inspireID TEXT PRIMARY KEY, coordinates TEXT NOT NULL, lat
 const createTable = db.prepare(`CREATE TABLE IF NOT EXISTS ${tableName} (${tableColumns})`)
 createTable.run()
 
-// TODO: Create Index for lat/long
-//`CREATE INDEX landRegistry_lat_lng ON landRegistry (latitude, longitude)`
+const indexInspire = db.prepare('CREATE INDEX IF NOT EXISTS landRegistry_inspireID ON landRegistry (inspireID ASC)')
+indexInspire.run()
+
+const indexLatLng = db.prepare('CREATE INDEX IF NOT EXISTS landRegistry_lat_lng ON landRegistry (latitude ASC, longitude ASC)')
+indexLatLng.run()
 
 module.exports = db
