@@ -48,15 +48,15 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     const longitude = parseFloat(ctx.params.longitude)
 
     // Create bounding box to search within before calculating the (accurate) distance
-    const latitudeMax = derivedPosition(latitude, longitude, 1100 * (radius * radius), 0).lat
-    const longitudeMax = derivedPosition(latitude, longitude, 1100 * (radius * radius), 90).long
-    const latitudeMin = derivedPosition(latitude, longitude, 1100 * (radius * radius), 180).lat
-    const longitudeMin = derivedPosition(latitude, longitude, 1100 * (radius * radius), 270).long
+    const latitudeMax = derivedPosition(latitude, longitude, 1100 * radius, 0).lat
+    const longitudeMax = derivedPosition(latitude, longitude, 1100 * radius, 90).long
+    const latitudeMin = derivedPosition(latitude, longitude, 1100 * radius, 180).lat
+    const longitudeMin = derivedPosition(latitude, longitude, 1100 * radius, 270).long
 
     const data = selectNearby.all({
         latitude,
         longitude,
-        radius: radius * radius,
+        radius,
         limit,
         latitudeMax,
         longitudeMax,
