@@ -8,10 +8,10 @@ db.function('nearestPositions', { deterministic: true }, nearestPositions)
 
 const selectInspireID = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE inspireID=?')
 const selectNearby = db.prepare('SELECT inspireID, coordinates, nearestPositions(latitude, @latitude, longitude, @longitude) AS distance FROM landRegistry WHERE latitude > @latitudeMin AND latitude < @latitudeMax AND longitude < @longitudeMax AND longitude > @longitudeMin AND distance < @radius ORDER BY distance LIMIT 0,@limit')
-
-
 const server = new Koa()
 const router = new Router()
+const args = process.argv.slice(2)
+const port = args[0] === '--port' ? args[1] : 80
 
 router.get('/', ctx => {
     ctx.body = {
@@ -24,7 +24,7 @@ router.get('/', ctx => {
 
 // http://localhost:3001/inspireid/14835677
 router.get('/inspireid/:id', bodyParser, async ctx => {
-    const data = await selectInspireID.get(ctx.params.id)
+    const data = selectInspireID.get(ctx.params.id)
     if (data) {
         data.coordinates = JSON.parse(data.coordinates)
         ctx.body = { data }
@@ -42,7 +42,7 @@ router.get('/inspireid/:id', bodyParser, async ctx => {
 // http://localhost:3001/nearby/51.6245033595047/-3.93390545244112?limit=500&radius=1000m
 router.get('/nearby/:latitude/:longitude', async ctx => {
     // Sanitise inputs and set defaults
-    const limit = (ctx.query.limit > 0 && ctx.query.limit <= 5000) ? ctx.query.limit : 100
+    const limit = (ctx.query.limit > 0 && ctx.query.limit <= 5000) ? ctx.query.limit : 500
     const radius = (ctx.query.radius > 0 && ctx.query.radius <= 1000) ? ctx.query.radius / 1000 : 0.1
     const latitude = parseFloat(ctx.params.latitude)
     const longitude = parseFloat(ctx.params.longitude)
@@ -53,7 +53,7 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     const latitudeMin = derivedPosition(latitude, longitude, 1100 * (radius * radius), 180).lat
     const longitudeMin = derivedPosition(latitude, longitude, 1100 * (radius * radius), 270).long
 
-    const data = await selectNearby.all({
+    const data = selectNearby.all({
         latitude,
         longitude,
         radius: radius * radius,
@@ -80,9 +80,6 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
         ctx.body = {}
     }
 })
-
-const args = process.argv.slice(2)
-const port = args[0] === '--port' ? args[1] : 80
 
 server.use(router.routes())
 server.listen(port)
