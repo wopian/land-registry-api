@@ -7,7 +7,7 @@ const { nearestPositions, derivedPosition } = require('./util')
 db.function('nearestPositions', { deterministic: true }, nearestPositions)
 
 const selectInspireID = db.prepare('SELECT inspireID, coordinates FROM landRegistry WHERE inspireID=?')
-const selectNearby = db.prepare('SELECT inspireID, coordinates, nearestPositions(latitude, @latitude, longitude, @longitude) AS distance FROM landRegistry WHERE latitude > @latitudeMin AND latitude < @latitudeMax AND longitude < @longitudeMax AND longitude > @longitudeMin AND distance < @radius ORDER BY distance LIMIT 0,@limit')
+const selectNearby = db.prepare('SELECT inspireID, coordinates, nearestPositions(latitude, @latitude, longitude, @longitude) AS distance FROM landRegistry WHERE latitude >= @latitudeMin AND latitude <= @latitudeMax AND longitude <= @longitudeMax AND longitude >= @longitudeMin AND distance <= @radius ORDER BY distance LIMIT 0,@limit')
 const server = new Koa()
 const router = new Router()
 const args = process.argv.slice(2)
