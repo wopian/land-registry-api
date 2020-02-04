@@ -43,7 +43,7 @@ router.get('/inspireid/:id', bodyParser, async ctx => {
 router.get('/nearby/:latitude/:longitude', async ctx => {
     // Sanitise inputs and set defaults
     const limit = (ctx.query.limit > 0 && ctx.query.limit <= 5000) ? ctx.query.limit : 500
-    const radius = (ctx.query.radius > 0 && ctx.query.radius <= 1000) ? ctx.query.radius / 1000 : 0.5
+    const radius = (ctx.query.radius > 0 && ctx.query.radius <= 1000) ? ctx.query.radius / 1000 : 0.2
     const latitude = parseFloat(ctx.params.latitude)
     const longitude = parseFloat(ctx.params.longitude)
 
