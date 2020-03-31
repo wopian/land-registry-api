@@ -1,4 +1,5 @@
 const Koa = require('koa')
+const cors = require('@koa/cors')
 const Router = require('koa-router')
 const bodyParser = require('koa-body')()
 const db = require('./database')
@@ -81,5 +82,6 @@ router.get('/nearby/:latitude/:longitude', async ctx => {
     }
 })
 
+server.use(cors())
 server.use(router.routes())
 server.listen(port)

@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "adm-zip": "^0.4.13",
     "better-sqlite3": "^5.4.3",
     "cli-ux": "^5.3.3",
