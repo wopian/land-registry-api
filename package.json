@@ -9,7 +9,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.3",
     "adm-zip": "^0.5.2",
-    "better-sqlite3": "^5.4.3",
+    "better-sqlite3": "^7.1.2",
     "cli-ux": "^5.3.3",
     "execa": "^3.3.0",
     "fs-extra": "^8.1.0",
